@@ -15,6 +15,8 @@ npm install
 npm start
 ```
 
+*NB: You can configure which port it starts by setting the PORT environment variable.*
+  
 ## Um...
 
 Sure, if you wanna fork, push PRs, etc -- go right ahead. Comes with no warranty nor rights. This is not an official BBC thing; It's just wee fun thing. 

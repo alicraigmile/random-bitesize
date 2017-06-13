@@ -5,7 +5,7 @@ Array.prototype.randomItem = function () {
 const fs = require('fs'),
     express = require('express'),
     app = express(),
-    port = 3000;
+    port = process.env.PORT || 3000;
 
 app.get('/', randomTopic);
 app.get('/status', status);

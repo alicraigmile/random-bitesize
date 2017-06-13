@@ -1,0 +1,8 @@
+{
+  "name": "random-bitesize",
+  "description": "Discover BBC Bitesize pages at random",
+  "repository": "https://github.com/alicraigmile/random-bitesize",
+  "logo": "https://cdn.rawgit.com/heroku/node-js-getting-started/master/public/node.svg",
+  "keywords": ["node", "express", "heroku"],
+  "image": "heroku/nodejs"
+}

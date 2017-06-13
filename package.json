@@ -6,6 +6,7 @@
   "scripts": {
     "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
+		"postversion": "git push origin && git push origin --tags",
     "build": "mkdir -p build && git archive --format=zip HEAD > build/$npm_package_name-$npm_package_version.zip"
   },
   "author": "Ali Craigmile <ali@craigmile.com> (http://ali.craigmile.com)",

@@ -1,12 +1,12 @@
 {
   "name": "random-bitesize",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Discover BBC Bitesize pages at random",
   "main": "index.js",
   "scripts": {
-		"start": "node index.js",
+    "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-		"build": "mkdir -p build && git archive --format=zip HEAD > build/$npm_package_name-$npm_package_version.zip"
+    "build": "mkdir -p build && git archive --format=zip HEAD > build/$npm_package_name-$npm_package_version.zip"
   },
   "author": "Ali Craigmile <ali@craigmile.com> (http://ali.craigmile.com)",
   "license": "ISC",

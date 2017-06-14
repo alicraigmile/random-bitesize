@@ -17,6 +17,10 @@ npm start
 
 *NB: You can configure which port it starts by setting the PORT environment variable.*
 
+## Feeling lazy?
+
+Just use my install: http://random-bitesize.herokuapp.com/
+
 ## A wittle bit too random?
 
 Try http://localhost:3000/daily

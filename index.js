@@ -15,6 +15,7 @@ app.get('/', randomTopicHtml);
 app.get('/json', randomTopicJson);
 app.get('/rss', randomTopicRss);
 app.get('/daily', randomTopicDaily);
+app.get('/daily/go', randomTopicDailyRedirect);
 app.get('/daily/rss', randomTopicDailyRss);
 app.get('/go', randomTopicRedirect);
 app.get('/status', status);
@@ -131,6 +132,32 @@ function randomTopicDailyRss (req, res) {
     });
 }
 
+function randomTopicDailyRedirect (req, res) {
+       const cacheKey = '24hrs',
+             cacheUpdate = function() {
+                var url = _randomTopic(),
+                    title = "Today's random bitesize page";
+                return [{url: url, title: title}];
+             };
+
+        myCache.get(cacheKey, function(err, value) {
+            if (!err)
+                if(value == undefined) {
+                    value = cacheUpdate();
+                    myCache.set(cacheKey, value, ttl, function(err, success) {
+                        if (!err && success) {
+                            _sendRss(req,res,value);
+                            res.redirect(value[0].url);
+                        } else {
+                            req.send('error');
+                        }
+                    });
+                } else {
+                    res.redirect(value[0].url);
+                }
+
+    });
+}
 
 function randomTopicJson (req, res) {
 		var url = _randomTopic();

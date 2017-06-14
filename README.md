@@ -16,7 +16,15 @@ npm start
 ```
 
 *NB: You can configure which port it starts by setting the PORT environment variable.*
-  
+
+## A wittle bit too random?
+
+Try http://localhost:3000/daily
+
+## HTML? Yuck!
+
+Pah. Though of that. Try:  /json, /xml or /go
+
 ## Um...
 
 Sure, if you wanna fork, push PRs, etc -- go right ahead. Comes with no warranty nor rights. This is not an official BBC thing; It's just wee fun thing. 

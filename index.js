@@ -14,6 +14,7 @@ const fs = require('fs'),
 app.get('/', randomTopicHtml);
 app.get('/json', randomTopicJson);
 app.get('/rss', randomTopicRss);
+app.get('/daily', randomTopicDaily);
 app.get('/daily/rss', randomTopicDailyRss);
 app.get('/go', randomTopicRedirect);
 app.get('/status', status);
@@ -52,20 +53,63 @@ var _sendRss = function(req, res, items) {
     res.send(rss);
 }
 
+var _sendHtml = function(req, res, items) {
+    var html = '',
+        name = pkg.name,
+        description = pkg.description;
+
+    html = '<!DOCTYPE html><html><body><h1>' + name + '</h1><p>' + description + '</p><ul>';
+    items.forEach(function(item) {
+        html += '<li><a href="' + item.url + '">' + item.title + '</a></li>';
+    });
+    html += '</ul></body></html>';
+
+    res.set('Content-Type', 'text/html');
+    res.send(html);
+}
+
+
 function randomTopicRss (req, res) {
     var url = _randomTopic(),
         title = "A random bitesize page",
-        rssItems =  [{url, title}]; //there can only be one
+        rssItems =  [{url: url, title: title}]; //there can only be one
 
     _sendRss(req, res, rssItems);
 }
+
+function randomTopicDaily (req, res) {
+       const cacheKey = '24hrs',
+             cacheUpdate = function() {
+                var url = _randomTopic(),
+                    title = "Today's random bitesize page";
+                return [{url:url, title:title}];
+             };
+
+        myCache.get(cacheKey, function(err, value) {
+            if (!err)
+                if(value == undefined) {
+                    value = cacheUpdate();
+                    myCache.set(cacheKey, value, ttl, function(err, success) {
+                        if (!err && success) {
+                            _sendHtml(req,res,value);
+                        } else {
+                            req.send('error');
+                        }
+                    });
+                } else {
+                    _sendHtml(req,res,value);
+                }
+                    
+    });
+}
+
 
 function randomTopicDailyRss (req, res) {
        const cacheKey = '24hrs',
              cacheUpdate = function() {
                 var url = _randomTopic(),
                     title = "Today's random bitesize page";
-                return [{url, title}];
+                return [{url: url, title: title}];
              };
 
         myCache.get(cacheKey, function(err, value) {
@@ -82,9 +126,10 @@ function randomTopicDailyRss (req, res) {
                 } else {
                     _sendRss(req,res,value);
                 }
-                    
+
     });
 }
+
 
 function randomTopicJson (req, res) {
 		var url = _randomTopic();

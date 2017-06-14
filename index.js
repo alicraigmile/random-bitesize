@@ -43,7 +43,7 @@ function randomTopicRss (req, res) {
 
 		res.set('Content-Type', 'application/rss+xml');
 
-    res.send('<?xml version="1.0" encoding="utf-8"><rss version="2.0"><channel><title>' + name + '</title><description>' + description + '</description><link>http://random-bitesize.herokuapp.com/</link><ttl>' + ttl + '</ttl><item><title>' + url + '</title><link>' + url + '</link></item></channel></rss>');
+    res.send('<?xml version="1.0" encoding="utf-8"?><rss version="2.0"><channel><title>' + name + '</title><description>' + description + '</description><link>http://random-bitesize.herokuapp.com/</link><ttl>' + ttl + '</ttl><item><title>' + url + '</title><link>' + url + '</link></item></channel></rss>');
 }
 
 function randomTopicJson (req, res) {

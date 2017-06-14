@@ -53,9 +53,11 @@ var _sendRss = function(req, res, items) {
 }
 
 function randomTopicRss (req, res) {
-    var url = _randomTopic();
+    var url = _randomTopic(),
+        title = "A random bitesize page",
+        rssItems =  [{url, title}]; //there can only be one
 
-    _sendRss(req, res, url);
+    _sendRss(req, res, rssItems);
 }
 
 function randomTopicDailyRss (req, res) {

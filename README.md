@@ -25,6 +25,6 @@ Try http://localhost:3000/daily
 
 Pah. Though of that. Try:  /json, /xml or /go
 
-## Um...
+## Um, can I...
 
 Sure, if you wanna fork, push PRs, etc -- go right ahead. Comes with no warranty nor rights. This is not an official BBC thing; It's just wee fun thing. 

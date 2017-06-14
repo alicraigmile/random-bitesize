@@ -1,6 +1,6 @@
 {
   "name": "random-bitesize",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": "Discover BBC Bitesize pages at random",
   "main": "index.js",
   "scripts": {

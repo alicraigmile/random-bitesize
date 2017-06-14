@@ -34,10 +34,11 @@ function _randomTopic () {
 }
 
 function randomTopicHtml (req, res) {
-		var url = _randomTopic(),
-        name = pkg.name,
-        description = pkg.description;
-    res.send('<body><h1>' + name + '</h1><p>' + description + '</p><h2>Random topic</h2><ul><li><a href="' + url + '">' + url + '</a></li></ul></body>');
+        var url = _randomTopic(),
+            title = "A random bitesize page",
+            listItems =  [{url: url, title: title}]; //there can only be one
+
+        _sendHtml(req,res,listItems);
 }
 
 var _sendRss = function(req, res, items) {

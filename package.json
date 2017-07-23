@@ -1,18 +1,24 @@
 {
   "name": "random-bitesize",
-  "version": "1.3.0",
+  "version": "1.5.0",
   "description": "Discover BBC Bitesize pages at random",
   "main": "index.js",
   "scripts": {
+    "data": "git submodule update --init --recursive",
     "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "postversion": "git push origin && git push origin --tags",
     "build": "mkdir -p build && git archive --format=zip HEAD > build/$npm_package_name-$npm_package_version.zip",
     "deploy": "git push heroku master"
   },
+  "repository": {
+    "type": "git",
+    "url": "https:/github.com/alicraigmile/random-bitesize.git"
+  },
   "author": "Ali Craigmile <ali@craigmile.com> (http://ali.craigmile.com)",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.15.3"
+    "express": "^4.15.3",
+    "node-cache": "^4.1.1"
   }
 }

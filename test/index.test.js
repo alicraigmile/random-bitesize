@@ -21,8 +21,6 @@ describe('Express App Integration Tests', () => {
   // Test for the GET / route
   test('GET / should return "random-bitesize"', async () => {
     const response = await request(server).get('/');
-#console.log('GET / response:', response.text);
-#    console.log('GET / headers:', response.headers);
     expect(response.statusCode).toBe(200);
     expect(response.headers['content-type']).toMatch(/text\/html/);
     expect(response.text).toContain('random-bitesize');

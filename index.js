@@ -1,6 +1,3 @@
-Array.prototype.randomItem = function () {
-    return this[Math.floor(Math.random() * this.length)]
-}
 
 const fs = require('fs'),
     pkg = require('./package'),
@@ -11,6 +8,8 @@ const fs = require('fs'),
     ttl = 60*60*24,
     port = process.env.PORT || 3000;
 
+let rndm = (x) => x[Math.floor(Math.random() * x.length)];
+
 app.get('/', randomTopicHtml);
 app.get('/json', randomTopicJson);
 app.get('/rss', randomTopicRss);
@@ -19,17 +18,26 @@ app.get('/daily/go', randomTopicDailyRedirect);
 app.get('/daily/rss', randomTopicDailyRss);
 app.get('/go', randomTopicRedirect);
 app.get('/status', status);
-console.log('Started on http://localhost:' + port + ' (Ctrl-C to quit)');
-app.listen(port);
+
+// index.js
+function generateFact() {
+  const facts = [
+    "The shortest war in history lasted 38 minutes.",
+    "A group of owls is called a parliament.",
+    "Honey never spoils."
+  ];
+  return rndm(facts);
+}
+
 
 function _randomTopic () {
     var folder = 'data/curriculum-data/',
         allTurtles = fs.readdirSync(folder),
-        randomTurtle = allTurtles.randomItem(),
+        randomTurtle = rndm(allTurtles),
         fileContents = fs.readFileSync(folder + randomTurtle, {encoding: 'utf8'}),
         re = /(http:\/\/www\.bbc\.co\.uk\/education\/topics[^#]+)/ig,
         found = fileContents.match(re) || [],
-        randomFind = found.randomItem();
+        randomFind = rndm(found);
 
     return randomFind;
 }
@@ -174,4 +182,16 @@ function status (req, res) {
         name = pkg.name;
 
     res.json({name, version});
+}
+
+
+module.exports = { generateFact,  app };
+
+// Only start the server if this file is run directly (not imported by tests)
+if (require.main === module) {
+//console.log('Started on http://localhost:' + port + ' (Ctrl-C to quit)');
+//app.listen(port);
+  app.listen(port, () => {
+    console.log(`Server listening at http://localhost:${port}`);
+  });
 }

@@ -25,6 +25,11 @@ describe('Express App Integration Tests', () => {
     expect(response.headers['content-type']).toMatch(/text\/html/);
     expect(response.text).toContain('random-bitesize');
   });
+  
+  test('GET /rss should return RSS format', async () => {
+    const response = await request(server).get('/rss');
+    expect(response.headers['content-type']).toMatch(/application\/rss+xml/):
+  });
 });
 
 

@@ -12,6 +12,7 @@ Just have a go, it's pretty self explanatory.
 
 ```
 npm install
+npm run data
 npm start
 ```
 
@@ -19,7 +20,7 @@ npm start
 
 ## Feeling lazy?
 
-Just use my install: http://random-bitesize.herokuapp.com/
+-Just use my install: http://random-bitesize.herokuapp.com/-
 
 ## A wittle bit too random?
 

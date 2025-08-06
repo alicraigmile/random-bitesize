@@ -28,7 +28,7 @@ describe('Express App Integration Tests', () => {
   
   test('GET /rss should return RSS format', async () => {
     const response = await request(server).get('/rss');
-    expect(response.headers['content-type']).toMatch(/application\/rss+xml/):
+    expect(response.headers['content-type']).toMatch(/application\/rss\+xml/);
   });
 });
 

@@ -35,7 +35,7 @@ function _randomTopic () {
         allTurtles = fs.readdirSync(folder),
         randomTurtle = rndm(allTurtles),
         fileContents = fs.readFileSync(folder + randomTurtle, {encoding: 'utf8'}),
-        re = /(http:\/\/www\.bbc\.co\.uk\/education\/topics[^#]+)/ig,
+        re = /(http:\/\/www\.bbc\.co\.uk\/bitesize\/topics[^#]+)/ig,
         found = fileContents.match(re) || [],
         randomFind = rndm(found);
 

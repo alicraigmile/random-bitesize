@@ -38,7 +38,7 @@ describe('App Status', () => {
 
 });
 
-describe('Default Behaviour', () => {
+describe('Default mode', () => {
   
   test('GET / should return "random-bitesize"', async () => {
     const response = await request(server).get('/');
@@ -66,7 +66,7 @@ describe('Default Behaviour', () => {
 
 });
 
-describe('"Daily" mode Behaviour', () => {
+describe("'Daily' mode", () => {
 
   test('GET /daily should return "random-bitesize"', async () => {
     const response = await request(server).get('/daily');

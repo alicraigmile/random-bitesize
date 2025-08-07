@@ -12,8 +12,10 @@ const fs = require('fs'),
         'forkMeOnGithub': 'Fork me on GitHub',
         'aRandomBitesizeTopic': 'A random bitesize topic',
         'todaysRandomBitesizeTopic': "Today's random bitesize topic",
-        'githubUrl': "https://github.com/alicraigmile/random-bitesize"
+        'githubUrl': "https://github.com/alicraigmile/random-bitesize",
+        'appUrl': 'http://random-bitesize.herokuapp.com/'
     };
+
 
 const randomTopic = () => {
     const folder = 'data/curriculum-data/',
@@ -35,10 +37,9 @@ const randomTopicHtml = (req, res) => {
 }
 
 const sendRss = (req, res, items) => {
-    const appurl = 'http://random-bitesize.herokuapp.com/';
     let rss = '';
 
-    rss = `<?xml version="1.0" encoding="utf-8"?><rss version="2.0"><channel><title>${pkg.name}</title><description>${pkg.description}</description><link>${appurl}</link><ttl>${ttl}</ttl>`;
+    rss = `<?xml version="1.0" encoding="utf-8"?><rss version="2.0"><channel><title>${pkg.name}</title><description>${pkg.description}</description><link>${strings.appUrl}</link><ttl>${ttl}</ttl>`;
     items.forEach((item) => {
         rss += `<item><title>${item.title}</title><link>${item.url}</link></item>`;
     });

@@ -20,30 +20,19 @@ app.get('/go', randomTopicRedirect);
 app.get('/status', status);
 
 // index.js
-function generateFact() {
-  const facts = [
-    "The shortest war in history lasted 38 minutes.",
-    "A group of owls is called a parliament.",
-    "Honey never spoils."
-  ];
-  return rndm(facts);
-}
-
-
-function _randomTopic () {
+function randomTopic () {
     var folder = 'data/curriculum-data/',
         allTurtles = fs.readdirSync(folder),
         randomTurtle = rndm(allTurtles),
         fileContents = fs.readFileSync(folder + randomTurtle, {encoding: 'utf8'}),
-        re = /(http:\/\/www\.bbc\.co\.uk\/bitesize\/topics[^#]+)/ig,
+        re = /(http:\/\/www\.bbc\.co\.uk\/education\/topics[^#]+)/ig,
         found = fileContents.match(re) || [],
         randomFind = rndm(found);
-
     return randomFind;
 }
 
 function randomTopicHtml (req, res) {
-        var url = _randomTopic(),
+        var url = randomTopic(),
             title = "A random bitesize page",
             listItems =  [{url: url, title: title}]; //there can only be one
 
@@ -77,10 +66,10 @@ var _sendHtml = function(req, res, items) {
     res.set('Content-Type', 'text/html');
     res.send(html);
 }
-
+ 
 
 function randomTopicRss (req, res) {
-    var url = _randomTopic(),
+    var url = randomTopic(),
         title = "A random bitesize page",
         rssItems =  [{url: url, title: title}]; //there can only be one
 
@@ -90,7 +79,7 @@ function randomTopicRss (req, res) {
 function randomTopicDaily (req, res) {
        const cacheKey = '24hrs',
              cacheUpdate = function() {
-                var url = _randomTopic(),
+                var url = randomTopic(),
                     title = "Today's random bitesize page";
                 return [{url:url, title:title}];
              };
@@ -117,7 +106,7 @@ function randomTopicDaily (req, res) {
 function randomTopicDailyRss (req, res) {
        const cacheKey = '24hrs',
              cacheUpdate = function() {
-                var url = _randomTopic(),
+                var url = randomTopic(),
                     title = "Today's random bitesize page";
                 return [{url: url, title: title}];
              };
@@ -143,7 +132,7 @@ function randomTopicDailyRss (req, res) {
 function randomTopicDailyRedirect (req, res) {
        const cacheKey = '24hrs',
              cacheUpdate = function() {
-                var url = _randomTopic(),
+                var url = randomTopic(),
                     title = "Today's random bitesize page";
                 return [{url: url, title: title}];
              };
@@ -168,29 +157,26 @@ function randomTopicDailyRedirect (req, res) {
 }
 
 function randomTopicJson (req, res) {
-		var url = _randomTopic();
+	var url = randomTopic();
     res.json({randomTopic: url});
 }
 
 function randomTopicRedirect (req, res) {
-		var url = _randomTopic();
+	var url = randomTopic();
     res.redirect(url);
 }
 
 function status (req, res) {
-    var version = pkg.version,
+    const version = pkg.version,
         name = pkg.name;
 
     res.json({name, version});
 }
 
-
-module.exports = { generateFact,  app };
+module.exports = { randomTopic,  app };
 
 // Only start the server if this file is run directly (not imported by tests)
 if (require.main === module) {
-//console.log('Started on http://localhost:' + port + ' (Ctrl-C to quit)');
-//app.listen(port);
   app.listen(port, () => {
     console.log(`Server listening at http://localhost:${port}`);
   });

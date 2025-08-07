@@ -1,6 +1,7 @@
 // index.test.js
 const request = require('supertest'); 
 const { app, generateFact } = require('../index'); // Adjust path as needed
+const bbcBitesizeUrl = /https?:\/\/www.bbc.co.uk\/[bitesize|education]/;
 const port = 3001;
 
 beforeAll((done) => {
@@ -17,8 +18,28 @@ afterAll((done) => {
   });
 });
 
-describe('Express App Integration Tests', () => {
-  // Test for the GET / route
+
+
+describe('Unit Tests', () => {
+  
+
+});
+
+describe('App Status', () => {
+  
+   test('GET /status should return JSON response', async () => {
+    const response = await request(server).get('/status');
+    expect(response.statusCode).toBe(200);
+    expect(response.headers['content-type']).toMatch(/application\/json/);
+    expect(response.body).toHaveProperty('name', 'random-bitesize');
+    expect(response.body).toHaveProperty('version');
+    expect(response.body['version']).not.toBeUndefined();
+  });
+
+});
+
+describe('Default Behaviour', () => {
+  
   test('GET / should return "random-bitesize"', async () => {
     const response = await request(server).get('/');
     expect(response.statusCode).toBe(200);
@@ -26,39 +47,45 @@ describe('Express App Integration Tests', () => {
     expect(response.text).toContain('random-bitesize');
   });
   
-  test('GET /rss should return RSS format', async () => {
+  test('GET /json should return JSON format', async () => {
+    const response = await request(server).get('/json');
+    expect(response.headers['content-type']).toMatch(/application\/json/);
+  });
+
+  test('GET /rss should respond with RSS format', async () => {
     const response = await request(server).get('/rss');
+    expect(response.statusCode).toBe(200);
     expect(response.headers['content-type']).toMatch(/application\/rss\+xml/);
   });
+
+  test('GET /go should return redirect user to BBC Bitesize', async () => {
+    const response = await request(server).get('/go');
+    expect(response.statusCode).toBe(302);
+    expect(response.headers['location']).toMatch(bbcBitesizeUrl);
+  });
+
 });
 
+describe('"Daily" mode Behaviour', () => {
 
-describe('generateFact', () => {
-  test('should return a string', () => {
-    const fact = generateFact();
-    expect(typeof fact).toBe('string');
+  test('GET /daily should return "random-bitesize"', async () => {
+    const response = await request(server).get('/daily');
+    expect(response.statusCode).toBe(200);
+    expect(response.headers['content-type']).toMatch(/text\/html/);
+    expect(response.text).toContain('random-bitesize'); 
   });
 
-  test('should return one of the predefined facts', () => {
-    const facts = [
-      "The shortest war in history lasted 38 minutes.",
-      "A group of owls is called a parliament.",
-      "Honey never spoils."
-    ];
-    const fact = generateFact();
-    expect(facts).toContain(fact);
+  test('GET /daily/go should redirect user to BBC Bitesize', async () => {
+    const response = await request(server).get('/daily/go');
+    expect(response.statusCode).toBe(302);
+    expect(response.headers).toHaveProperty('location');
+    expect(response.headers['location']).toMatch(bbcBitesizeUrl);
   });
-
-  // You might want to mock Math.random for more deterministic tests
-  test('should return the first fact when Math.random is mocked', () => {
-    const mockMath = Object.create(global.Math);
-    mockMath.random = () => 0.0; // Always return 0
-    global.Math = mockMath;
-
-    const fact = generateFact();
-    expect(fact).toBe("The shortest war in history lasted 38 minutes.");
-
-    // Restore original Math.random
-    global.Math = Object.create(global.Math);
+  
+  test('GET /daily/rss should return RSS format response', async () => {
+    const response = await request(server).get('/daily/rss');
+    expect(response.statusCode).toBe(200);
+    expect(response.headers['content-type']).toMatch(/application\/rss\+xml/);
   });
+    
 });
